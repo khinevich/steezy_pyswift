@@ -11,12 +11,11 @@ import SwiftUI
 @Observable class FriendViewModel {
     var friends = [Friend]()
     init() {
+        friends.append(contentsOf: Friend.sampleFriends)
         loadSampleFriends()
     }
     
     func loadSampleFriends() {
-        friends.append(contentsOf: Friend.sampleFriends)
-        
         // TODO fetching data from DB
     }
     

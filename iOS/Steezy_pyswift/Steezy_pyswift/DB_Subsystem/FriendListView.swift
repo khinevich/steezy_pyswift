@@ -37,10 +37,6 @@ struct FriendListView: View {
                 }
             }
         }
-
-        //.onAppear {
-        //    viewModel.loadSampleFriends()
-        //}
     }
 }
 
