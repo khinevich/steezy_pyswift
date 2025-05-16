@@ -7,7 +7,7 @@
 
 import Foundation
 
-@Observable class Friend: Identifiable {
+struct Friend: Identifiable {
     var id: Int
     var name: String
     var surname: String
@@ -17,16 +17,7 @@ import Foundation
     var telephone: String
     var study: String
     
-    init(id: Int, name: String, surname: String, age: Int, sex: String, email: String, telephone: String, study: String) {
-        self.id = id
-        self.name = name
-        self.surname = surname
-        self.age = age
-        self.sex = sex
-        self.email = email
-        self.telephone = telephone
-        self.study = study
-    }
+
     var fullName: String {
         return "\(name) \(surname)"
     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FriendView: View {
     
-    @Bindable var friend: Friend
+    var friend: Friend
     var body: some View {
         VStack {
             Text("\(friend.name) \(friend.surname)")
