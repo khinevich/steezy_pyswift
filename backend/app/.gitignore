@@ -28,7 +28,7 @@ htmlcov/
 *.log
 
 # Environment variables
-../.env
+.env
 .env.local
 
 # IDE specific files
