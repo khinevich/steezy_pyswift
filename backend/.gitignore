@@ -3,6 +3,7 @@ venv/
 .venv/
 env/
 ENV/
+virtualenv/
 
 # Python bytecode compiled files
 __pycache__/
@@ -13,23 +14,47 @@ __pycache__/
 *.db
 *.sqlite
 *.sqlite3
+data.json
 
 # Distribution / packaging
 dist/
 build/
 *.egg-info/
+*.egg
+develop-eggs/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.whl
 
 # Testing
 .pytest_cache/
 .coverage
 htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
 
 # Logs
 *.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Environment variables
 .env
 .env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # IDE specific files
 .idea/
@@ -37,3 +62,22 @@ htmlcov/
 *.swp
 *.swo
 .DS_Store
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Docker related
+.docker/
+docker-compose.override.yml
+
+# FastAPI specific
+__pycache__/
+**/__pycache__/
+
+# Generated files
+.serverless/
+.fusebox/
+.dynamodb/
