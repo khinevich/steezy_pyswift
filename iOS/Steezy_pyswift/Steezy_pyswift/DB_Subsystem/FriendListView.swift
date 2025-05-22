@@ -16,7 +16,7 @@ struct FriendListView: View {
         NavigationView {
             List {
                 ForEach (viewModel.friends) {friend in
-                        NavigationLink(destination: FriendView(friend: friend)) {
+                    NavigationLink(destination: FriendView(friend: friend, viewModel: viewModel)) {
                             Text(friend.name)
                     }
                 }

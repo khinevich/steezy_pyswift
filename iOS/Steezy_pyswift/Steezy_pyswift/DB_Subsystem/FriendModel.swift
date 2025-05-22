@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Friend: Identifiable {
+struct Friend: Identifiable, Codable {
     var id: Int
     var name: String
     var surname: String
@@ -17,9 +17,13 @@ struct Friend: Identifiable {
     var telephone: String
     var study: String
     
-
+    
     var fullName: String {
         return "\(name) \(surname)"
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, surname, age, sex, email, telephone, study
     }
 }
 
