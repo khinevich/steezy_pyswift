@@ -12,6 +12,8 @@ struct FriendListView: View {
     
     @State var sampleId = 4
     
+    @State private var showingSheet = false
+    
     var body: some View {
         NavigationView {
             List {
@@ -20,19 +22,21 @@ struct FriendListView: View {
                             Text(friend.name)
                     }
                 }
-                .onDelete(perform: viewModel.deleteFriend)
+                .onDelete { IndexSet in
+                    viewModel.deleteFriend(at: IndexSet)
+                    print("Deleting")
+                }
             }
             .navigationTitle("Friends")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        print("adding friend")
-                        viewModel.addFriend(Friend(id: sampleId , name: "New Friend", surname: "Surname", age: 25, sex: "male", email: "email@gmail.com", telephone: "+79123456789", study: "Study"))
-                        self.sampleId += 1
-                        
-                        print(viewModel.friends)
+                        showingSheet.toggle()
                     }) {
                         Image(systemName: "plus")
+                    }
+                    .sheet(isPresented: $showingSheet) {
+                        AddFriendSheetView(viewModel: viewModel, isPresented: $showingSheet, sampleId: $sampleId)
                     }
                 }
             }
