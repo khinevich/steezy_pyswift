@@ -28,7 +28,11 @@ import SwiftUI
         friends.remove(atOffsets: indexSet)
     }
     
-    func updateFriend(_ friend: Friend){
-        print("TODO Update friend")
+    func updateFriend(_ updatedFriend: Friend){
+        if let index = friends.firstIndex(where: {$0.id == updatedFriend.id}){
+            friends[index] = updatedFriend
+        } else {
+            print("No id found")
+        }
     }
 }
