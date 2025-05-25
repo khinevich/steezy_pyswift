@@ -20,7 +20,7 @@ struct AddFriendSheetView: View {
     @State private var telephone = ""
     @State private var study = ""
     
-    let sexOptions = ["male", "female", "other"]
+    let sexOptions = ["male", "female"]
     
     var body: some View {
         NavigationView {
@@ -80,11 +80,11 @@ struct AddFriendSheetView: View {
         )
         
         Task {
-            await viewModel.addFriend(newFriend)
+            viewModel.addFriend(newFriend)
             print("adding friend")
-            //viewModel.addFriend(Friend(id: sampleId , name: "New Friend", surname: "Surname", age: 25, sex: "male", email: "email@gmail.com", telephone: "+79123456789", study: "Study"))
             self.sampleId += 1
             
+            print(newFriend)
             print(viewModel.friends)
             
             isPresented = false

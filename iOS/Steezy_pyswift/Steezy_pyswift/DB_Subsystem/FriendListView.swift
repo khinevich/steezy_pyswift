@@ -21,10 +21,11 @@ struct FriendListView: View {
                     NavigationLink(destination: FriendView(friend: friend, viewModel: viewModel)) {
                             Text(friend.name)
                     }
-                }
+                } 
                 .onDelete { IndexSet in
                     viewModel.deleteFriend(at: IndexSet)
                     print("Deleting")
+                    print(viewModel.friends)
                 }
             }
             .navigationTitle("Friends")

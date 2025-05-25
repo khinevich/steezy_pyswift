@@ -12,7 +12,7 @@ struct FriendView: View {
     @State var friend: Friend
     @Bindable var viewModel: FriendViewModel
     @State private var isEditing = false
-    
+    let sexOptions = ["male", "female"]
     var body: some View {
         VStack(alignment: .center, spacing: 8) {
             Image(systemName: "person.circle.fill")
@@ -22,99 +22,102 @@ struct FriendView: View {
                 .foregroundColor(.blue)
             
             if isEditing {
-                TextField("Name", text: $friend.name)
-                    .font(.title)
-                    .multilineTextAlignment(.center)
-                TextField("Surname", text: $friend.surname)
-                    .font(.title2)
-                    .multilineTextAlignment(.center)
+                Form {
+                    Section(header: Text("Personal Information")) {
+                        TextField("Name", text: $friend.name)
+                        TextField("Surname", text: $friend.surname)
+                        TextField("Age", value: $friend.age, format: .number)
+                            .keyboardType(.numberPad)
+                        Picker("Sex", selection: $friend.sex) {
+                            ForEach(sexOptions, id: \.self) {
+                                Text($0)
+                            }
+                        }
+                    }
+                    Section(header: Text("Contact Information")) {
+                        TextField("Email", text: $friend.email)
+                            .keyboardType(.emailAddress)
+                        TextField("Telephone", text: $friend.telephone)
+                            .keyboardType(.phonePad)
+                    }
+                    
+                    Section(header: Text("Education")) {
+                        TextField("Study", text: $friend.study)
+                    }
+                }
             } else {
-                Text(friend.fullName)
-                    .font(.title)
-                    .fontWeight(.bold)
+                Form {
+                    Section(header: Text("Personal Information")) {
+                        Text(friend.name)
+                        Text(friend.surname)
+                        Text(friend.age.description)
+                        Text(friend.sex)
+                    }
+                    Section(header: Text("Contact Information")) {
+                        Text(friend.email)
+                            .keyboardType(.emailAddress)
+                        Text(friend.telephone)
+                            .keyboardType(.phonePad)
+                    }
+                    
+                    Section(header: Text("Education")) {
+                        Text(friend.study)
+                    }
+                }
             }
         }
         .frame(maxWidth: .infinity)
         .padding(.bottom, 20)
         
-        VStack {
-            if (isEditing) {
-                //TextField("Age", text: $friend.age)
-                Section(header: Text("Contact Information")) {
-                    TextField("Email", text: $friend.email)
-                    TextField("Telephone", text: $friend.telephone)
-                }
-                Section(header: Text("Personal Information")) {
-                    TextField("Age", value: $friend.age, format: .number)
-                    TextField("Sex", text: $friend.sex)
-                }
-                Section(header: Text("Education")) {
-                    TextField("Study", text: $friend.study)
-                }
-            }
-            else {
-                VStack {
-                    Section(header: Text("Personal Information")) {
-                        Text("Age: \(friend.age)")
-                        Text("Sex: \(friend.sex)")
-                    }
-                    
-                    Section(header: Text("Contact Information")) {
-                        Text("Email: \(friend.email)")
-                        Text("Telephone: \(friend.telephone)")
-                    }
-                    
-                    Section(header: Text("Education")) {
-                        Text("Study: \(friend.study)")
-                    }
-                }
-            }
-            if (isEditing){
-                HStack {
-                    Button(action: {
-                        // Discard changes
-                        self.friend = viewModel.friends.first(where: { $0.id == friend.id }) ?? friend
-                        isEditing = false
-                        print("Cancel")
-                    }) {
-                        Text("Cancel")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(10)
-                            .foregroundColor(.primary)
-                    }
-                    
-                    Button(action: {
-                        Task {
-                            //await viewModel.updateFriend(friend)
-                            isEditing = false
-                            print("Save Changes")
-                        }
-                    }) {
-                        Text("Save Changes")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                            .foregroundColor(.white)
-                    }
-                }
-            } else {
+        // BUTTONS
+        if (isEditing){
+            HStack {
                 Button(action: {
-                    isEditing.toggle()
-                    print("Edit")
+                    // Discard changes
+                    self.friend = viewModel.friends.first(where: { $0.id == friend.id }) ?? friend
+                    isEditing = false
+                    print("Cancel")
                 }) {
-                    Text("Edit")
-                        .frame(maxWidth: .infinity)
+                    Text("Cancel")
+                        .frame(maxWidth: 150)
+                        .padding()
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(10)
+                        .foregroundColor(.primary)
+                }
+                
+                Button(action: {
+                    Task {
+                        viewModel.updateFriend(friend)
+                        isEditing = false
+                        print("Save Changes")
+                        print(friend)
+                        print(viewModel.friends)
+                    }
+                }) {
+                    Text("Save Changes")
+                        .frame(maxWidth: 150)
                         .padding()
                         .background(Color.blue)
                         .cornerRadius(10)
                         .foregroundColor(.white)
                 }
             }
+        } else {
+            Button(action: {
+                isEditing.toggle()
+                print("Edit")
+            }) {
+                Text("Edit")
+                    .frame(maxWidth: 200)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    .foregroundColor(.white)
+            }
         }
     }
+
 }
 
 #Preview {

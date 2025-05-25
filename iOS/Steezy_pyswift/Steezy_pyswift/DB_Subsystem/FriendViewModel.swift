@@ -28,7 +28,7 @@ import SwiftUI
         friends.remove(atOffsets: indexSet)
     }
     
-    func updateFriend(){
+    func updateFriend(_ friend: Friend){
         print("TODO Update friend")
     }
 }
