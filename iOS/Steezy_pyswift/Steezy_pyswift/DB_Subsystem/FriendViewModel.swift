@@ -12,11 +12,15 @@ import SwiftUI
     var friends = [Friend]()
     init() {
         friends.append(contentsOf: Friend.sampleFriends)
-        loadSampleFriends()
+        Task {
+            await loadSampleFriends()
+        }
     }
     
-    func loadSampleFriends() {
+    @MainActor
+    func loadSampleFriends() async {
         // TODO fetching data from DB
+        
     }
     
     // CRUD Methods
