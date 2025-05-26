@@ -23,21 +23,34 @@ struct FriendListView: View {
                     }
                 } 
                 .onDelete { IndexSet in
-                    viewModel.deleteFriend(at: IndexSet)
-                    print("Deleting")
-                    print(viewModel.friends)
+                    Task {
+                        await viewModel.deleteFriend(at: IndexSet)
+                    }
                 }
             }
             .navigationTitle("Friends")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showingSheet.toggle()
-                    }) {
-                        Image(systemName: "plus")
-                    }
-                    .sheet(isPresented: $showingSheet) {
-                        AddFriendSheetView(viewModel: viewModel, isPresented: $showingSheet, sampleId: $sampleId)
+                    HStack {
+                        Button(action: {
+                            showingSheet.toggle()
+                        }) {
+                            Image(systemName: "plus")
+                        }
+                        .sheet(isPresented: $showingSheet) {
+                            AddFriendSheetView(viewModel: viewModel, isPresented: $showingSheet, sampleId: $sampleId)
+                        }
+                        Button(action: {
+                            viewModel.refreshFriends()
+                        }) {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        
+                        Button(action: {
+                            viewModel.printAllFriends()
+                        }) {
+                            Image(systemName: "printer")
+                        }
                     }
                 }
             }

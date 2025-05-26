@@ -88,11 +88,11 @@ struct FriendView: View {
                 
                 Button(action: {
                     Task {
-                        viewModel.updateFriend(friend)
+                        await viewModel.updateFriend(friend)
                         isEditing = false
                         print("Save Changes")
                         print(friend)
-                        print(viewModel.friends)
+                        viewModel.printAllFriends()
                     }
                 }) {
                     Text("Save Changes")

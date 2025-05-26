@@ -80,12 +80,9 @@ struct AddFriendSheetView: View {
         )
         
         Task {
-            viewModel.addFriend(newFriend)
-            print("adding friend")
+            await viewModel.addFriend(newFriend)
             self.sampleId += 1
-            
-            print(newFriend)
-            print(viewModel.friends)
+            viewModel.printAllFriends()
             
             isPresented = false
         }

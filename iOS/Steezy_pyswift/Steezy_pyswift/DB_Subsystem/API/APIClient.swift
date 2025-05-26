@@ -64,13 +64,13 @@ class APIClient {
             try validateResponse(response)
             
             let friends = try JSONDecoder().decode([Friend].self, from: data)
-            print("Successfully fetched \(friends.count) friends")
+            print("✅ Successfully fetched \(friends.count) friends")
             return friends
         } catch let error as APIError { // Catches errors that are already of type APIError
-            print("Error: \(error)")
+            print("XXXXXXXXXX   Error: \(error)")
             throw error
         } catch { // This is a catch-all block that catches any other error type
-            print("Error fetching friends: \(error)")
+            print("XXXXXXXXXX   Error fetching friends: \(error)")
             throw APIError.networkError(error)
         }
     }
@@ -86,7 +86,7 @@ class APIClient {
             try validateResponse(response)
             
             let friend = try JSONDecoder().decode(Friend.self, from: data)
-            print("Successfully fetched friend \(friend)")
+            print("✅ Successfully fetched friend \(friend)")
             return friend
         } catch let error as APIError {
             throw error
@@ -153,7 +153,7 @@ class APIClient {
             try validateResponse(response)
                     
             let updatedFriend = try JSONDecoder().decode(Friend.self, from: data)
-            print("Succesfsfully updated friend: \(updatedFriend.fullName)")
+            print("✅ Succesfsfully updated friend: \(updatedFriend.fullName)")
             
             return updatedFriend
         } catch let error as APIError {
@@ -178,7 +178,7 @@ class APIClient {
             let (_, response) = try await session.data(for: request)
             try validateResponse(response)
             
-            print("Successfully deleted friend with Id: \(id)")
+            print("✅ Successfully deleted friend with Id: \(id)")
         } catch let error as APIError {
             throw error
         } catch {
