@@ -1,6 +1,8 @@
-# This file is used to set environment variables for the backend application.
-# It loads the database URL from a .env file or defaults to SQLite if not found.
-# It is used to configure the database connection for the application.
+# Database Configuration for FastAPI Backend
+# 
+# This file configures the database connection for the Friends API.
+# Primary database: PostgreSQL (configured via DATABASE_URL environment variable)
+# Backup/Development fallback: SQLite (for offline development or testing only)
 
 import os
 from dotenv import load_dotenv
@@ -9,9 +11,13 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 load_dotenv()  # Load variables from .env file
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./friends.db")  # Fallback to SQLite if not found
 
-# For SQLite, connect_args is needed for multithreading
+# Primary: PostgreSQL connection (production/development)
+# Backup: SQLite fallback (for offline development/testing only)
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./friends_db_backup.db")  # SQLite backup with consistent naming
+
+# SQLite-specific configuration (backup database only)
+# Note: SQLite requires check_same_thread=False for FastAPI compatibility
 connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
 # Create database engine
