@@ -14,6 +14,7 @@ __pycache__/
 *.db
 *.sqlite
 *.sqlite3
+friends_db_backup.db  # SQLite backup database (fallback only)
 data.json
 
 # Distribution / packaging
